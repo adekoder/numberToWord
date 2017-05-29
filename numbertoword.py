@@ -32,7 +32,7 @@ class Convert(object):
         digit_group = []
         if digit_len > 3:
             # if digit is > 3 split them in schuncks of 3
-            digit_group = self.group_number(number)
+            digit_group = self.group_number()
             digit_group_len = len(digit_group)
             counter = 0
             while digit_group_len > 0:
@@ -102,14 +102,13 @@ class Convert(object):
             divisor /= 10     
         return self.word
 
-    def group_number(self, number):
+    def group_number(self):
         ''' this function group into chunck of threes from right to left '''
-        number = int(number)
         digit_group = []
-        while number > 0:
-            remainder = number % 1000
+        while self.number > 0:
+            remainder = self.number % 1000
             digit_group.append(remainder)
-            number /= 1000
+            self.number /= 1000
         return digit_group
 
 
@@ -117,6 +116,6 @@ class Convert(object):
 
 
 if __name__ == '__main__':
-    value = 1016737
+    value = 123423
     result = Convert(value)
     print(result.convert_to_word())

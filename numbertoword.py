@@ -1,4 +1,6 @@
-
+'''
+    This is python module that convert number into it corresponding word format
+'''
 
 PLACE_VALUE = ['', 'thousand', 'million', 'billion', 'trillion']
 
@@ -8,13 +10,22 @@ NUMBER_WORD = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'e
                'eighty', 'ninty'
               ]
 
+class CharacterLengthException(Exception):
+    pass
+
 class Convert(object):
 
     def __init__(self, number):
+        ''' Collecting the number input and testing the input'''
+        if not isinstance(number , int):
+            raise TypeError('An integer must be passed %s passed'%(type(number)))
+        if len(str(number)) > 15:
+            raise CharacterLengthException("Number character can only be 15 character or less")
         self.number = number
         self.word = ''
 
     def convert_to_word(self):
+        ''' This convert the whole number to word '''
         number = int(self.number)
         digit_len = len(str(self.number))
         word_format = []
@@ -43,7 +54,7 @@ class Convert(object):
         return self.word
 
     def hundred_tens_units(self, number_chunk):
-        """ hundred tens and units conversion """
+        ''' hundred tens and units conversion '''
         divisor = 100
         self.word = ""
         dividen = int(number_chunk)
@@ -69,7 +80,7 @@ class Convert(object):
                             quotent = int(str(quotent) + str(remainder))
                             self.word += NUMBER_WORD[quotent]
                         else:
-                            quotent = int('2' + str(quotent - COMMON_INDEX))
+                            quotent = int(str(COMMON_INDEX) + str(quotent - COMMON_INDEX))
                             self.word += NUMBER_WORD[quotent]
                     return self.word
                 else:
@@ -79,7 +90,7 @@ class Convert(object):
                             self.word += NUMBER_WORD[quotent]
                             return self.word
                         else:
-                            quotent = int('2' + str(quotent - COMMON_INDEX))
+                            quotent = int(str(COMMON_INDEX) + str(quotent - COMMON_INDEX))
                         self.word += NUMBER_WORD[quotent] + '-'
                         dividen = remainder
             elif step == 3:
@@ -92,7 +103,7 @@ class Convert(object):
         return self.word
 
     def group_number(self, number):
-        """ this function group into chunck of threes from right to left"""
+        ''' this function group into chunck of threes from right to left '''
         number = int(number)
         digit_group = []
         while number > 0:
@@ -106,11 +117,6 @@ class Convert(object):
 
 
 if __name__ == '__main__':
-    # file =  open('output1.txt' , 'w')
-    # for value in range(1,999999):
-    # 	result = toword(str(value))
-    # 	file.write("%s => %s \n" %(value,result) )
-    # file.close()
-    value = '101'
+    value = 1016737
     result = Convert(value)
     print(result.convert_to_word())

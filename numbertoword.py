@@ -116,6 +116,6 @@ class Convert(object):
 
 
 if __name__ == '__main__':
-    value = 123423
+    value = 123423456
     result = Convert(value)
     print(result.convert_to_word())
